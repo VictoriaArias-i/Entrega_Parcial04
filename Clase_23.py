@@ -32,7 +32,7 @@
 
 def inicio_prog():
     print("Bienvenido al menú para comprar una entrada al concierto de \"Noche de brujas\".")
-    opc=int(input("¿Qué es lo que le gustaría hacer?\n1-. Comprar entradas\n2-. Consultar comprador\n3-. Cancelar compra\n4-.Continuar ingresando ventas o Salir del sistema.\n"))
+    opc=int(input("¿Qué es lo que le gustaría hacer?\n1-. Comprar entradas\n2-. Consultar comprador\n3-. Cancelar compra\n 4-.Continuar ingresando ventas o Salir del sistema.\n"))
 
     if opc==1:
         print("Has escogido \"Comprar entrada\".")
@@ -51,9 +51,15 @@ def inicio_prog():
 
 def comp_entr():
     print("Para poder comprar una entrada tienes que ingresar:\n- Nombre del comprador\n-Tipo de entrada (General o VIP)\n-Ingresar codigo de confirmación.")
+    nomb_comp=input("Ingrese el nombre de usuario: ")
+    tip_entr=int(input("¿Qué tipo de entrada quiere?: "))
+    cod_conf=input("Ingrese el codigo de confirmación: ")
+    cod_conf=cod_conf.strip()
+    
 
 def cons_entr():
     print("Para consultar su entrada tiene que buscar su nombre de usuario.")
+    n
 
 def canc_comp():
     print("Para cancelar la compra necesita ingresar su nombre de usuario")
@@ -61,4 +67,6 @@ def canc_comp():
 def cont_salir():
     print("GEI")
 
+def volver():
+    print("")
 inicio_prog()
