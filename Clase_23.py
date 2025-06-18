@@ -30,68 +30,102 @@
 print("Bienvenido al menú para comprar una entrada al concierto de \"Noche de brujas\".")
 
 def inicio_prog():
-    opc=int(input("¿Qué es lo que le gustaría hacer?\n1-. Comprar entradas\n2-. Consultar comprador\n3-. Cancelar compra\n 4-.Continuar ingresando ventas o Salir del sistema.\n"))
-    if opc==1:
-        print("Has escogido \"Comprar entrada\".")
-        comp_entr()
-    elif opc==2:
-        print("Has escogido \"Consultar comprador\".")
-        cons_entr()
-    elif opc==3:
-        print("Has escogido \"Cancelar compra\".")
-        canc_comp()
-    elif opc==4:
-        print("Has escogido \"Continuar ingresando ventas o salir del menú. \".")
-    else: 
-        print("Oh no, algo ha salido mal, debes volver a escoger una opción.")
-        inicio_prog()
+    while True:
+        try:
+            opc=int(input("¿Qué es lo que le gustaría hacer?\n1-. Comprar entradas\n2-. Consultar comprador\n3-. Cancelar compra\n4-.Continuar ingresando ventas o Salir del sistema.\n"))
+            if opc==1:
+                print("Has escogido \"Comprar entrada\".")
+                comp_entra()
+            elif opc==2:
+                print("Has escogido \"Consultar comprador\".")
+                cons_entr()
+            elif opc==3:
+                print("Has escogido \"Cancelar compra\".")
+                cance_comp()
+            elif opc==4:
+                print("Has escogido \"Continuar ingresando ventas o salir del menú. \".")
+            else: 
+                print("Oh no, algo ha salido mal, debes volver a escoger una opción.")
+                inicio_prog()
+        except ValueError:
+            print("Error, el numero ingresado es del 1 al 4.")
+compradores= []
+class persona:
+    def __init__(self,nombre, tipo_entr, codigo):
+        self.nombre = nombre
+        self.tipo_entr = tipo_entr
+        self.codigo = codigo
 
-def main_user(user):
-    class persona:
-        def __init__(self,nombre, tipo_entr, codigo):
-            self.nombre = nombre
-            self.tipo_entr = tipo_entr
-            self.codigo = codigo
-
-        user = []
+def comp_entra():
+    global compradores
+    compradores = compradores
     while True:
         try:
             nombre=input("Ingrese el nombre de usuario: ").lower().strip()
-            if nombre in user:
+            if any(comprador.nombre == nombre for comprador in compradores):
                 print("Usuario ya está creado, intente de nuevo.")
                 continue
             else:
-                print("El usuario ha sido creado.")
+                tipo_entr = input("¿Qué tipo de entrada quiere? (General o VIP):").strip().lower()
+                if tipo_entr not in ["general", "vip"]:
+                    print("Tipo de entrada no valida, debe escoger entre \"General\" o \"Vip\".")
+                    continue
+                elif tipo_entr == "general":
+                    print("El costo de la entrada general es de 10.000.")
+                elif tipo_entr == "vip":
+                    print("El costo de la entrada VIP es de 50.000.")
+
+            codigo=input("Ingrese el codigo de confirmación: ").strip()
+            if len(codigo) < 6 or " " in codigo and any(c.isdigit() for c in codigo):
+                print("El código de confirmación debe tener al menos 6 caracteres y no puede contener espacios.")
+                continue
+            if not any(c.isdigit() for c in codigo) or not any(c.isupper() for c in codigo) or not any(c.islower() for c in codigo):
+                print("El código de confirmación debe contener al menos un número, una mayúscula y una minúscula.")
+                continue
+            if any(comprador.codigo == codigo for comprador in compradores):
+                print("El código de confirmación ya está en uso, intente con otro.")
+                continue
+            
+            compradores.append(persona(nombre, tipo_entr, codigo))
+            print(f"Compra exitosa para {nombre} con tipo de entrada {tipo_entr} y código {codigo}.")
+            break
         except ValueError:
             print("Error, intentelo de nuevo")
             continue
-        
-        tipo_entr=input("¿Qué tipo de entrada quiere?(General o VIP): ").strip().lower()
-        if tipo_entr not in ["general", "vip"]:
-            print("Tipo de entrada no válida. Debe escoger entre el \"General\" o \"VIP\".")
-            continue
-        elif tipo_entr == "general":
-            print("El costo de la entrada general es de 10.000.")
-        elif tipo_entr == "vip":
-            print("El costo de la entrada VIP es de 50.000.")
-        codigo=input("Ingrese el codigo de confirmación: ").strip()
-        if len(codigo) < 6 or " " in codigo and any(c.isdigit() for c in codigo):
-            print("El código de confirmación debe tener al menos 6 caracteres y no puede contener espacios.")
-def comp_entr():
-    print("Para poder comprar una entrada tienes que ingresar:\n- Nombre del comprador\n-Tipo de entrada (General o VIP)\n-Ingresar codigo de confirmación.")
-
-    
 
 def cons_entr():
-    print("Para consultar su entrada tiene que buscar su nombre de usuario.")
-    n
-
-def canc_comp():
-    print("Para cancelar la compra necesita ingresar su nombre de usuario")
+    """Función para consultar comprador."""
+    global compradores
+    nombre = input("Ingrese el nombre de usuario para consultar: ").lower().strip()
+    comprador = next((c for c in compradores if c.nombre == nombre), None)
+    if comprador:
+        print(f"Nombre: {comprador.nombre}")
+        print(f"Tipo de entrada: {comprador.tipo_entrada}")
+        print(f"Código de confirmación: {comprador.codigo}")
+    else:
+        print("Comprador no existe.")
+def cance_comp():
+    """Función para cancelar compra."""
+    global compradores
+    nombre = input("Ingrese el nombre de usuario para cancelar la compra: ").lower().strip()
+    comprador = next((c for c in compradores if c.nombre == nombre), None)
+    if comprador:
+        compradores.remove(comprador)
+        print("Compra cancelada exitosamente.")
+    else:
+        print("Comprador no existe.")
 
 def cont_salir():
-    print("GEI")
-
-def volver():
-    print("")
+    """Función para continuar o salir del sistema."""
+    while True:
+        opcion = input("¿Desea continuar ingresando ventas o salir del sistema? (continuar/salir): ").strip().lower()
+        if opcion == "continuar":
+            print("Regresando al menú principal...")
+            return
+        elif opcion == "salir":
+            print("Gracias por usar el sistema. ¡Hasta luego!")
+            exit()
+        else:
+            print("Opción no válida, intente de nuevo.")
+            cont_salir()
 inicio_prog()
