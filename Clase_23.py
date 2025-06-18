@@ -13,8 +13,6 @@
 # Diccionario: Almacenamiento de datos, es más complcado pero se puede borrar info con comandos, es mutable. Es un conjuto desordenado.0
 # Funciones: 
 
-"""Ejercicio tipo prueba"""
-
 #   Realicen un programa en Python, que permita generar un menú de gestión de entradas para el concierto de Noche de brujas.
 # Menú principal:
 #   - Comprar entradas: Se debe permitir ingresar el nombre del comprador, tipo de entrada y codigo de confirmación por separado. 
@@ -26,14 +24,13 @@
 # Para que la compra sea exitosa se tiene que cumplir con esto:
     #a) El nombre del comprador no debe repetirse.
     #b) La entrada general tiene un costo de 10.000 y el VIP 50.000
-    #c) El codigo de confirmación tiene que tener un minimo de 6 caracteres y sin espacios, con mayuscual y minuscula.
+    #c) El codigo de confirmación tiene que tener un minimo de 6 caracteres, con uno o más numeros y sin espacios, con mayuscual y minuscula.
     #d) En el caso de cumplir con todas las condiciones la compra se resgitra como exitosa.
 
+print("Bienvenido al menú para comprar una entrada al concierto de \"Noche de brujas\".")
 
 def inicio_prog():
-    print("Bienvenido al menú para comprar una entrada al concierto de \"Noche de brujas\".")
     opc=int(input("¿Qué es lo que le gustaría hacer?\n1-. Comprar entradas\n2-. Consultar comprador\n3-. Cancelar compra\n 4-.Continuar ingresando ventas o Salir del sistema.\n"))
-
     if opc==1:
         print("Has escogido \"Comprar entrada\".")
         comp_entr()
@@ -49,12 +46,40 @@ def inicio_prog():
         print("Oh no, algo ha salido mal, debes volver a escoger una opción.")
         inicio_prog()
 
+def main_user(user):
+    class persona:
+        def __init__(self,nombre, tipo_entr, codigo):
+            self.nombre = nombre
+            self.tipo_entr = tipo_entr
+            self.codigo = codigo
+
+        user = []
+    while True:
+        try:
+            nombre=input("Ingrese el nombre de usuario: ").lower().strip()
+            if nombre in user:
+                print("Usuario ya está creado, intente de nuevo.")
+                continue
+            else:
+                print("El usuario ha sido creado.")
+        except ValueError:
+            print("Error, intentelo de nuevo")
+            continue
+        
+        tipo_entr=input("¿Qué tipo de entrada quiere?(General o VIP): ").strip().lower()
+        if tipo_entr not in ["general", "vip"]:
+            print("Tipo de entrada no válida. Debe escoger entre el \"General\" o \"VIP\".")
+            continue
+        elif tipo_entr == "general":
+            print("El costo de la entrada general es de 10.000.")
+        elif tipo_entr == "vip":
+            print("El costo de la entrada VIP es de 50.000.")
+        codigo=input("Ingrese el codigo de confirmación: ").strip()
+        if len(codigo) < 6 or " " in codigo and any(c.isdigit() for c in codigo):
+            print("El código de confirmación debe tener al menos 6 caracteres y no puede contener espacios.")
 def comp_entr():
     print("Para poder comprar una entrada tienes que ingresar:\n- Nombre del comprador\n-Tipo de entrada (General o VIP)\n-Ingresar codigo de confirmación.")
-    nomb_comp=input("Ingrese el nombre de usuario: ")
-    tip_entr=int(input("¿Qué tipo de entrada quiere?: "))
-    cod_conf=input("Ingrese el codigo de confirmación: ")
-    cod_conf=cod_conf.strip()
+
     
 
 def cons_entr():
