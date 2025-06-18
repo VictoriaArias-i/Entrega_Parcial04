@@ -4,86 +4,198 @@
 #Objetos= Son instancias de una clase, que tienen atributos y métodos.
 
 """Ejercicio tipo prueba"""
+"""haga un programa que permita generar un menu de ingreso de usuario.
 
-#   Realicen un programa en Python, que permita generar un menú de gestión de entradas para el concierto de Noche de brujas.
-# Menú principal:
-#   - Comprar entradas: Se debe permitir ingresar el nombre del comprador, tipo de entrada y codigo de confirmación por separado. 
-#   - Consultar comprador: Debe permitir buscar compradores mediante el nombre. Si el comprador existe debería mostrar datos asociados. Si no existe el usuario debe salir "Comprador no existe"
-# Si existe el usuario te muestra el nombre del comprador, tipo de entrada y codigo de confirmación por separado. 
-#   - Cancelar compra: El menú debe permitir o mostrar una opcion que permita eliminar un comprador con toda su información asociada a dicho comprador.
-#   - Continuar ingresar ventas o Salir del sistema.
-# Todas las opciones tiene que estar implementas mediantes funciones separadas del codigo principal (MAIN).
-# Para que la compra sea exitosa se tiene que cumplir con esto:
-    #a) El nombre del comprador no debe repetirse.
-    #b) La entrada general tiene un costo de 10.000 y el VIP 50.000
-    #c) El codigo de confirmación tiene que tener un minimo de 6 caracteres, con uno o más numeros y sin espacios, con mayuscual y minuscula.
-    #d) En el caso de cumplir con todas las condiciones la compra se resgitra como exitosa.
+el programa debe:
 
-print("Bienvenido al menú para comprar una entrada al concierto de \"Noche de brujas\".")
+1. tener un menu principal, que muestre 4 opciones:
 
-def inicio_prog():
-    opc=int(input("¿Qué es lo que le gustaría hacer?\n1-. Comprar entradas\n2-. Consultar comprador\n3-. Cancelar compra\n 4-.Continuar ingresando ventas o Salir del sistema.\n"))
-    if opc==1:
-        print("Has escogido \"Comprar entrada\".")
-        comp_entr()
-    elif opc==2:
-        print("Has escogido \"Consultar comprador\".")
-        cons_entr()
-    elif opc==3:
-        print("Has escogido \"Cancelar compra\".")
-        canc_comp()
-    elif opc==4:
-        print("Has escogido \"Continuar ingresando ventas o salir del menú. \".")
-    else: 
-        print("Oh no, algo ha salido mal, debes volver a escoger una opción.")
-        inicio_prog()
+  1. Ingresar usuario
 
-def main_user(user):
-    class persona:
-        def __init__(self,nombre, tipo_entr, codigo):
-            self.nombre = nombre
-            self.tipo_entr = tipo_entr
-            self.codigo = codigo
+  2. buscar usuario
 
-        user = []
-    while True:
-        try:
-            nombre=input("Ingrese el nombre de usuario: ").lower().strip()
-            if nombre in user:
-                print("Usuario ya está creado, intente de nuevo.")
-                continue
-            else:
-                print("El usuario ha sido creado.")
-        except ValueError:
-            print("Error, intentelo de nuevo")
-            continue
-        
-        tipo_entr=input("¿Qué tipo de entrada quiere?(General o VIP): ").strip().lower()
-        if tipo_entr not in ["general", "vip"]:
-            print("Tipo de entrada no válida. Debe escoger entre el \"General\" o \"VIP\".")
-            continue
-        elif tipo_entr == "general":
-            print("El costo de la entrada general es de 10.000.")
-        elif tipo_entr == "vip":
-            print("El costo de la entrada VIP es de 50.000.")
-        codigo=input("Ingrese el codigo de confirmación: ").strip()
-        if len(codigo) < 6 or " " in codigo and any(c.isdigit() for c in codigo):
-            print("El código de confirmación debe tener al menos 6 caracteres y no puede contener espacios.")
-def comp_entr():
-    print("Para poder comprar una entrada tienes que ingresar:\n- Nombre del comprador\n-Tipo de entrada (General o VIP)\n-Ingresar codigo de confirmación.")
+  3. eliminar usuario
 
-    
+  4. salir
 
-def cons_entr():
-    print("Para consultar su entrada tiene que buscar su nombre de usuario.")
-    n
+2. al ingresar la opcion 1:
 
-def canc_comp():
-    print("Para cancelar la compra necesita ingresar su nombre de usuario")
+  -se debe solicitar el nombre del usuario, sexo, clave. (por separado)
 
-def cont_salir():
-    print("GEI")
+  -para que el ingreso del usuario sea exitoso, se debe compartir lo siguiente:
 
-def volver():
-    print("")
-inicio_prog()
+    *el nombre del usuario no estar repetido
+
+    *el sexo del usuario debe ser definido como 'M' o 'F'
+
+    *la contraseña debe ser de un minimo de 8 caracteres, al menos un numero, una letra y no contener espacios.
+
+  -en caso de que el ingreso del usuario sea exitoso, se debe mostrar un mensaje de confirmacion.
+
+3. al ingresar la opcion 2:
+
+  -se debe solicitar el nombre del usuario a buscar.
+
+  -si el usuario existe, se debe mostrar su informacion (nombre, sexo, clave).
+
+  -si no existe, se debe mostrar un mensaje de error.
+
+4. al ingresar la opcion 3:
+
+  -se debe solicitar el nombre del usuario a eliminar.
+
+  -si el usuario existe, se debe eliminar y mostrar un mensaje de confirmacion.
+
+  -si no existe, se debe mostrar un mensaje de error.
+
+5. al ingresar la opcion 4:
+
+  -se debe mostrar un mensaje de despedida y salir del programa.
+
+6. en caso de ingrear una opcion no valida, se debe mostrar un mensaje de error y volver al menu principal.
+
+
+
+todas las opciones deben estar definidas en funciones separadas e incluidas en una función main."""
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+class Persona:
+
+  def __init__(self, nombre, clave, sexo):
+
+    self.nombre = nombre
+
+    self.clave = clave
+
+    self.sexo = sexo
+
+
+
+def menu_principal():
+
+  print("Menu Principal:")
+
+  print("1. Ingresar usuario")
+
+  print("2. Buscar usuario")
+
+  print("3. Eliminar usuario")
+
+  print("4. Salir")
+
+  return input("Seleccione una opcion (1-4): ")
+
+
+
+def ingresar_usuario(usuarios):
+
+  while True:
+
+    nombre = input("Ingrese el nombre del usuario: ").strip().lower()
+
+    if nombre in usuarios:
+
+      print("El nombre de usuario ya existe. Intente con otro.")
+
+      continue
+
+    break
+
+  while True:
+
+    sexo = input("Ingrese el sexo del usuario (M/F): ").upper()
+
+    if sexo not in ['M', 'F']:
+
+      print("Entrada invalida. Intente de nuevo.")
+
+      continue
+
+    break
+
+  while True:
+
+    clave = input("Ingrese la clave del usuario (minimo 8 caracteres, al menos un numero y una letra): ")
+
+    if len(clave) < 8 or not any(c.isdigit() for c in clave) or not any(c.isalpha() for c in clave):
+
+      print("Entrada invalida. Intente de nuevo.")
+
+      continue
+
+    break
+
+  usuarios[nombre] = Persona(nombre, clave, sexo)
+
+  print("Usuario ingresado exitosamente.")
+
+  return usuarios
+
+
+
+def buscar_usuario(usuarios):
+
+  nombre = input("Ingrese el nombre del usuario a buscar: ").strip().lower()
+
+  if nombre in usuarios:
+
+    usuario = usuarios[nombre]
+
+    print(f"Usuario encontrado: Nombre: {usuario.nombre}, Sexo: {usuario.sexo}, Clave: {usuario.clave}")
+
+  else:
+
+    print("Usuario no encontrado.")
+
+
+
+def eliminar_usuario(usuarios):
+
+  nombre = input("Ingrese el nombre del usuario a eliminar: ").strip().lower()
+
+  if nombre in usuarios:
+
+    del usuarios[nombre]
+
+    print(f"Usuario {nombre} eliminado exitosamente.")
+
+  else:
+
+    print("Usuario no encontrado.")
+
+
+
+def main():
+
+  usuarios = {}
+
+  while True:
+
+    opcion = menu_principal()
+
+    if opcion == "1":
+
+      usuarios = ingresar_usuario(usuarios)
+
+    elif opcion == "2":
+
+      buscar_usuario(usuarios)
+
+    elif opcion == "3":
+
+      eliminar_usuario(usuarios)
+
+    elif opcion == "4":
+
+      print("¡Hasta luego!")
+
+      break
+
+    else:
+
+      print("Opcion invalida. Intente de nuevo.")
+
+
+
+main()
