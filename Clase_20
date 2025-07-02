@@ -12,6 +12,113 @@
 #   esta agenda o lista de contacto debe poderse editar, guardar, modificar y eliminar (CRUD).
 #   Dicho esto resuelva lo que acabamos de pedir. 
 
+agenda = {}
+
+def agregar_contacto():
+    nombre = input("Nombre: ").strip().title()
+    apellido = input("Apellido: ").strip().title()
+    clave = (nombre, apellido)
+    if clave in agenda:
+        print("Ese contacto ya existe.")
+        return
+    direccion = input("Dirección: ").strip()
+    cumple = input("Cumpleaños (dd/mm/aaaa): ").strip()
+    while True:
+        nota = input("Nota (máx 50 caracteres): ").strip()
+        if len(nota) > 50:
+            print("La nota no puede superar los 50 caracteres.")
+        else:
+            break
+    agenda[clave] = {
+        "direccion": direccion,
+        "cumple": cumple,
+        "nota": nota
+    }
+    print("Contacto agregado exitosamente.")
+
+def buscar_contacto():
+    nombre = input("Nombre del contacto: ").strip().title()
+    apellido = input("Apellido del contacto: ").strip().title()
+    clave = (nombre, apellido)
+    if clave in agenda:
+        c = agenda[clave]
+        print(f"Nombre: {nombre}\nApellido: {apellido}\nDirección: {c['direccion']}\nCumpleaños: {c['cumple']}\nNota: {c['nota']}")
+    else:
+        print("Contacto no encontrado.")
+
+def modificar_contacto():
+    nombre = input("Nombre del contacto a modificar: ").strip().title()
+    apellido = input("Apellido del contacto a modificar: ").strip().title()
+    clave = (nombre, apellido)
+    if clave not in agenda:
+        print("Contacto no encontrado.")
+        return
+    c = agenda[clave]
+    print("Deja en blanco si no quieres modificar ese dato.")
+    nueva_direccion = input(f"Nueva dirección [{c['direccion']}]: ").strip() or c['direccion']
+    nuevo_cumple = input(f"Nuevo cumpleaños [{c['cumple']}]: ").strip() or c['cumple']
+    while True:
+        nueva_nota = input(f"Nueva nota (máx 50 caracteres) [{c['nota']}]: ").strip()
+        if nueva_nota == "":
+            nueva_nota = c['nota']
+            break
+        elif len(nueva_nota) > 50:
+            print("La nota no puede superar los 50 caracteres.")
+        else:
+            break
+    agenda[clave] = {
+        "direccion": nueva_direccion,
+        "cumple": nuevo_cumple,
+        "nota": nueva_nota
+    }
+    print("Contacto modificado exitosamente.")
+
+def eliminar_contacto():
+    nombre = input("Nombre del contacto a eliminar: ").strip().title()
+    apellido = input("Apellido del contacto a eliminar: ").strip().title()
+    clave = (nombre, apellido)
+    if clave in agenda:
+        del agenda[clave]
+        print("Contacto eliminado.")
+    else:
+        print("Contacto no encontrado.")
+
+def mostrar_todos():
+    if not agenda:
+        print("No hay contactos en la agenda.")
+        return
+    for clave, c in agenda.items():
+        nombre, apellido = clave
+        print(f"Nombre: {nombre} | Apellido: {apellido} | Dirección: {c['direccion']} | Cumpleaños: {c['cumple']} | Nota: {c['nota']}")
+        print("-" * 40)
+
+def menu():
+    while True:
+        print("\n--- Agenda Samsung ---")
+        print("1. Agregar contacto")
+        print("2. Buscar contacto")
+        print("3. Modificar contacto")
+        print("4. Eliminar contacto")
+        print("5. Mostrar todos los contactos")
+        print("6. Salir")
+        op = input("Elija una opción: ")
+        if op == "1":
+            agregar_contacto()
+        elif op == "2":
+            buscar_contacto()
+        elif op == "3":
+            modificar_contacto()
+        elif op == "4":
+            eliminar_contacto()
+        elif op == "5":
+            mostrar_todos()
+        elif op == "6":
+            print("¡Hasta luego!")
+            break
+        else:
+            print("Opción no válida.")
+
+menu()
 
 """Ejercicio 02"""
 
@@ -25,4 +132,139 @@
 # Analista= Analisis de datos, Limpieza de datos, Creación Dashboard
 # Gastronomia= Historia de la gastronomia, Diferencia de alimentos naturales procesados, Sopaipilla 2
 
-#
+estudiantes = {}
+
+def agregar_estudiante():
+    id_est = input("Ingrese ID del estudiante: ").strip()
+    if id_est in estudiantes:
+        print("Ese ID ya está registrado.")
+        return
+    nombre = input("Nombre: ").strip().title()
+    apellido = input("Apellido: ").strip().title()
+    correo = input("Correo electrónico: ").strip()
+    print("Carreras disponibles:\n1. Ingenieria\n2. Analista\n3. Gastronomia")
+    while True:
+        carrera_op = input("Ingrese el nombre de la carrera: ").strip().lower()
+        if carrera_op == "ingenieria":
+            print("Módulos: 1) Desarrollo web  2) Desarrollo movil  3) Desarrollo escritorio")
+            modulo = input("Elija módulo: ").strip().title()
+            if modulo not in ["Desarrollo Web", "Desarrollo Movil", "Desarrollo Escritorio"]:
+                print("Módulo no válido.")
+                continue
+            break
+        elif carrera_op == "analista":
+            print("Módulos: 1) Analisis de datos  2) Limpieza de datos  3) Creación Dashboard")
+            modulo = input("Elija módulo: ").strip().title()
+            if modulo not in ["Analisis De Datos", "Limpieza De Datos", "Creación Dashboard"]:
+                print("Módulo no válido.")
+                continue
+            break
+        elif carrera_op == "gastronomia":
+            print("Módulos: 1) Historia de la gastronomia  2) Diferencia de alimentos naturales procesados  3) Sopaipilla 2")
+            modulo = input("Elija módulo: ").strip().title()
+            if modulo not in ["Historia De La Gastronomia", "Diferencia De Alimentos Naturales Procesados", "Sopaipilla 2"]:
+                print("Módulo no válido.")
+                continue
+            break
+        else:
+            print("Carrera no válida.")
+    estudiantes[id_est] = {
+        "nombre": nombre,
+        "apellido": apellido,
+        "correo": correo,
+        "carrera": carrera_op.title(),
+        "modulo": modulo
+    }
+    print("Estudiante agregado exitosamente.")
+
+def buscar_estudiante():
+    id_est = input("Ingrese el ID del estudiante a buscar: ").strip()
+    if id_est in estudiantes:
+        e = estudiantes[id_est]
+        print(f"ID: {id_est}\nNombre: {e['nombre']}\nApellido: {e['apellido']}\nCorreo: {e['correo']}\nCarrera: {e['carrera']}\nMódulo: {e['modulo']}")
+    else:
+        print("Estudiante no encontrado.")
+
+def modificar_estudiante():
+    id_est = input("Ingrese el ID del estudiante a modificar: ").strip()
+    if id_est not in estudiantes:
+        print("Estudiante no encontrado.")
+        return
+    e = estudiantes[id_est]
+    print("Deja en blanco para no modificar ese dato.")
+    nombre = input(f"Nuevo nombre [{e['nombre']}]: ").strip().title() or e['nombre']
+    apellido = input(f"Nuevo apellido [{e['apellido']}]: ").strip().title() or e['apellido']
+    correo = input(f"Nuevo correo [{e['correo']}]: ").strip() or e['correo']
+    carrera = input(f"Nueva carrera [{e['carrera']}]: ").strip().title() or e['carrera']
+    if carrera.lower() == "ingenieria":
+        print("Módulos: 1) Desarrollo web  2) Desarrollo movil  3) Desarrollo escritorio")
+        modulo = input(f"Nuevo módulo [{e['modulo']}]: ").strip().title() or e['modulo']
+        if modulo not in ["Desarrollo Web", "Desarrollo Movil", "Desarrollo Escritorio"]:
+            print("Módulo no válido. Se mantiene el anterior.")
+            modulo = e['modulo']
+    elif carrera.lower() == "analista":
+        print("Módulos: 1) Analisis de datos  2) Limpieza de datos  3) Creación Dashboard")
+        modulo = input(f"Nuevo módulo [{e['modulo']}]: ").strip().title() or e['modulo']
+        if modulo not in ["Analisis De Datos", "Limpieza De Datos", "Creación Dashboard"]:
+            print("Módulo no válido. Se mantiene el anterior.")
+            modulo = e['modulo']
+    elif carrera.lower() == "gastronomia":
+        print("Módulos: 1) Historia de la gastronomia  2) Diferencia de alimentos naturales procesados  3) Sopaipilla 2")
+        modulo = input(f"Nuevo módulo [{e['modulo']}]: ").strip().title() or e['modulo']
+        if modulo not in ["Historia De La Gastronomia", "Diferencia De Alimentos Naturales Procesados", "Sopaipilla 2"]:
+            print("Módulo no válido. Se mantiene el anterior.")
+            modulo = e['modulo']
+    else:
+        modulo = e['modulo']
+    estudiantes[id_est] = {
+        "nombre": nombre,
+        "apellido": apellido,
+        "correo": correo,
+        "carrera": carrera,
+        "modulo": modulo
+    }
+    print("Estudiante modificado exitosamente.")
+
+def eliminar_estudiante():
+    id_est = input("Ingrese el ID del estudiante a eliminar: ").strip()
+    if id_est in estudiantes:
+        del estudiantes[id_est]
+        print("Estudiante eliminado.")
+    else:
+        print("Estudiante no encontrado.")
+
+def mostrar_todos():
+    if not estudiantes:
+        print("No hay estudiantes registrados.")
+        return
+    for id_est, e in estudiantes.items():
+        print(f"ID: {id_est} | Nombre: {e['nombre']} | Apellido: {e['apellido']} | Correo: {e['correo']} | Carrera: {e['carrera']} | Módulo: {e['modulo']}")
+        print("-" * 40)
+
+def menu():
+    while True:
+        print("\n--- Sistema de Estudiantes DUOCUC ---")
+        print("1. Agregar estudiante")
+        print("2. Buscar estudiante")
+        print("3. Modificar estudiante")
+        print("4. Eliminar estudiante")
+        print("5. Mostrar todos los estudiantes")
+        print("6. Salir")
+        op = input("Elija una opción: ")
+        if op == "1":
+            agregar_estudiante()
+        elif op == "2":
+            buscar_estudiante()
+        elif op == "3":
+            modificar_estudiante()
+        elif op == "4":
+            eliminar_estudiante()
+        elif op == "5":
+            mostrar_todos()
+        elif op == "6":
+            print("¡Hasta luego!")
+            break
+        else:
+            print("Opción no válida.")
+
+menu()
